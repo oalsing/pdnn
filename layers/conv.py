@@ -23,7 +23,7 @@ import numpy
 
 import theano
 import theano.tensor as T
-from theano.tensor.signal import downsample
+from theano.tensor.signal import pool
 from theano.tensor.nnet import conv
 
 class ConvLayer(object):
@@ -174,7 +174,7 @@ class ConvLayerForward(object):
 
             y_out = activation(conv_out + self.b.dimshuffle('x', 0, 'x', 'x'))
             # downsample each feature map individually, using maxpooling
-            self.output = downsample.max_pool_2d(input=y_out,
+            self.output = pool.pool_2d(input=y_out,
                                              ds=poolsize, ignore_border=True)
         if self.flatten:
             self.output = self.output.flatten(2)
